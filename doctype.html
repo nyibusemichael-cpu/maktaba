@@ -1,0 +1,839 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student Academic Library</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Inter', sans-serif; background: #0f172a; min-height: 100vh; }
+
+/* LOGIN */
+#loginPage { min-height: 100vh; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #1e3a5f 0%, #0f172a 50%, #1a1a2e 100%); }
+.login-background { width: 100%; display: flex; align-items: center; justify-content: center; padding: 20px; }
+.login-card { background: white; border-radius: 20px; padding: 40px 36px; width: 100%; max-width: 440px; box-shadow: 0 25px 60px rgba(0,0,0,0.4); }
+.login-logo { text-align: center; font-size: 48px; margin-bottom: 8px; }
+.login-title { text-align: center; font-size: 22px; font-weight: 800; color: #1e3a5f; margin-bottom: 4px; }
+.login-subtitle { text-align: center; color: #64748b; font-size: 13px; margin-bottom: 28px; }
+.login-card h2 { font-size: 20px; font-weight: 700; color: #1e293b; margin-bottom: 4px; }
+.form-description { color: #64748b; font-size: 13px; margin-bottom: 20px; }
+.form-group { margin-bottom: 16px; }
+.form-group label { display: block; font-size: 13px; font-weight: 600; color: #374151; margin-bottom: 6px; }
+.input-box { display: flex; align-items: center; border: 2px solid #e2e8f0; border-radius: 10px; padding: 10px 14px; gap: 10px; transition: border 0.2s; }
+.input-box:focus-within { border-color: #3b82f6; }
+.input-icon { font-size: 16px; }
+.input-box input { flex: 1; border: none; outline: none; font-size: 14px; color: #1e293b; background: transparent; min-width: 0; }
+.toggle-pass { background: none; border: none; cursor: pointer; font-size: 16px; }
+.login-btn { width: 100%; padding: 13px; background: linear-gradient(135deg, #1e3a5f, #3b82f6); color: white; border: none; border-radius: 10px; font-size: 15px; font-weight: 700; cursor: pointer; margin-top: 8px; transition: opacity 0.2s; }
+.login-btn:hover { opacity: 0.9; }
+.login-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+.login-message { font-size: 13px; margin-top: 10px; min-height: 20px; text-align: center; font-weight: 600; }
+
+/* HEADER */
+.main-header { background: linear-gradient(135deg, #1e3a5f, #0f172a); padding: 14px 24px; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 10px rgba(0,0,0,0.3); }
+.header-content { display: flex; align-items: center; justify-content: space-between; max-width: 1200px; margin: 0 auto; gap: 12px; }
+.logo-section { display: flex; align-items: center; gap: 12px; }
+.logo { font-size: 30px; }
+.brand-text h1 { font-size: 16px; font-weight: 700; color: white; }
+.brand-text p { font-size: 11px; color: #93c5fd; }
+.user-section { display: flex; align-items: center; gap: 12px; }
+.user-info { display: flex; align-items: center; gap: 6px; color: white; font-size: 13px; font-weight: 600; }
+.user-icon { font-size: 18px; }
+.logout-btn { background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); color: white; padding: 7px 14px; border-radius: 8px; cursor: pointer; font-size: 12px; font-weight: 600; }
+.logout-btn:hover { background: rgba(255,255,255,0.25); }
+
+/* HERO */
+.hero-wrap { background: linear-gradient(135deg, #1e3a5f 0%, #1e40af 100%); }
+.hero-section { padding: 60px 24px; display: flex; align-items: center; justify-content: space-between; max-width: 1200px; margin: 0 auto; gap: 40px; flex-wrap: wrap; }
+.hero-content { flex: 1; min-width: 280px; }
+.hero-badge { background: rgba(255,255,255,0.15); color: #bfdbfe; font-size: 11px; font-weight: 700; padding: 6px 14px; border-radius: 20px; letter-spacing: 1px; }
+.hero-content h2 { font-size: 36px; font-weight: 800; color: white; margin: 16px 0; line-height: 1.2; }
+.hero-content h2 span { color: #fbbf24; }
+.hero-content p { color: #bfdbfe; font-size: 14px; margin-bottom: 20px; }
+.search-container { display: flex; align-items: center; background: white; border-radius: 12px; padding: 12px 16px; gap: 10px; max-width: 400px; }
+.search-container input { flex: 1; border: none; outline: none; font-size: 14px; color: #1e293b; min-width: 0; }
+.hero-image { position: relative; flex-shrink: 0; }
+.hero-book { font-size: 80px; }
+.floating-card { position: absolute; background: white; border-radius: 10px; padding: 8px 14px; font-size: 12px; font-weight: 600; color: #1e3a5f; box-shadow: 0 4px 15px rgba(0,0,0,0.2); white-space: nowrap; }
+.card-one { top: -10px; right: -20px; }
+.card-two { bottom: 10px; right: -30px; }
+.card-three { bottom: -20px; left: -10px; }
+
+/* SUBJECTS */
+.subjects-section { padding: 40px 24px; max-width: 1200px; margin: 0 auto; }
+.section-heading { margin-bottom: 24px; }
+.section-label { font-size: 11px; font-weight: 700; color: #3b82f6; letter-spacing: 2px; }
+.section-heading h2 { font-size: 24px; font-weight: 800; color: #1e293b; margin: 4px 0; }
+.section-heading p { color: #64748b; font-size: 13px; }
+.subjects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; }
+.subject-card { background: white; border-radius: 14px; padding: 20px; cursor: pointer; border: 2px solid #f1f5f9; transition: all 0.2s; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+.subject-card:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(0,0,0,0.12); border-color: #3b82f6; }
+.subject-card-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+.subject-icon { width: 42px; height: 42px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; }
+.subject-icon.blue, .subject-icon.dark-blue { background: #dbeafe; }
+.subject-icon.green { background: #dcfce7; }
+.subject-icon.orange { background: #ffedd5; }
+.subject-icon.purple { background: #f3e8ff; }
+.subject-icon.teal { background: #ccfbf1; }
+.subject-icon.cyan { background: #cffafe; }
+.subject-icon.emerald { background: #d1fae5; }
+.subject-icon.red { background: #fee2e2; }
+.subject-icon.indigo { background: #e0e7ff; }
+.subject-icon.pink { background: #fce7f3; }
+.subject-icon.yellow { background: #fef9c3; }
+.subject-icon.violet { background: #ede9fe; }
+.arrow { color: #94a3b8; font-size: 18px; }
+.subject-card h3 { font-size: 15px; font-weight: 700; color: #1e293b; margin-bottom: 4px; }
+.subject-card p { font-size: 12px; color: #64748b; margin-bottom: 12px; }
+.subject-footer { border-top: 1px solid #f1f5f9; padding-top: 10px; font-size: 12px; color: #94a3b8; }
+
+/* SUBJECT PAGE */
+.subject-page-container { max-width: 900px; margin: 0 auto; padding: 24px; }
+.subject-page-header { margin-bottom: 24px; }
+.back-btn { background: #f1f5f9; border: none; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-size: 13px; font-weight: 600; color: #1e3a5f; margin-bottom: 16px; }
+.back-btn:hover { background: #e2e8f0; }
+.subject-heading h2 { font-size: 24px; font-weight: 800; color: #1e293b; }
+.subject-heading p { color: #64748b; font-size: 13px; }
+.file-search-container { display: flex; align-items: center; background: white; border: 2px solid #e2e8f0; border-radius: 10px; padding: 10px 16px; gap: 10px; margin-bottom: 20px; }
+.file-search-container:focus-within { border-color: #3b82f6; }
+.file-search-container input { flex: 1; border: none; outline: none; font-size: 14px; min-width: 0; }
+.file-list { display: flex; flex-direction: column; gap: 8px; }
+.file-item { background: white; border-radius: 10px; padding: 14px 16px; display: flex; align-items: center; justify-content: space-between; border: 1px solid #f1f5f9; box-shadow: 0 1px 4px rgba(0,0,0,0.05); gap: 10px; }
+.file-item:hover { border-color: #bfdbfe; background: #f8faff; }
+.file-item-left { display: flex; align-items: center; gap: 10px; flex: 1; min-width: 0; }
+.file-num { font-size: 11px; color: #94a3b8; font-weight: 600; min-width: 22px; }
+.file-item-icon { font-size: 18px; flex-shrink: 0; }
+.file-item-name { font-size: 13px; color: #1e293b; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.file-actions { display: flex; gap: 8px; flex-shrink: 0; }
+.file-btn { padding: 6px 12px; border-radius: 7px; font-size: 12px; font-weight: 600; cursor: pointer; border: none; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; }
+.open-btn { background: #dbeafe; color: #1d4ed8; }
+.open-btn:hover { background: #bfdbfe; }
+.download-btn { background: #dcfce7; color: #16a34a; }
+.download-btn:hover { background: #bbf7d0; }
+.no-files { text-align: center; padding: 40px; color: #94a3b8; font-size: 14px; }
+
+/* PLANNER */
+.planner-section { max-width: 1200px; margin: 0 auto; padding: 32px 24px 0; }
+.planner-card { background: white; border-radius: 16px; padding: 24px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); border: 2px solid #e0e7ff; }
+.planner-card h2 { font-size: 20px; font-weight: 800; color: #1e293b; }
+.planner-card .sub { color: #64748b; font-size: 13px; margin: 4px 0 18px; }
+.pl-status { border-radius: 14px; padding: 18px; text-align: center; background: #eff6ff; color: #1e3a5f; transition: background 0.3s; }
+.pl-status.study { background: #dcfce7; color: #14532d; }
+.pl-status.break { background: #fef9c3; color: #713f12; }
+.pl-status.done { background: #f3e8ff; color: #581c87; }
+.pl-label { font-size: 14px; font-weight: 700; }
+.pl-count { font-size: 40px; font-weight: 800; margin: 6px 0; font-variant-numeric: tabular-nums; }
+.pl-sub { font-size: 12px; opacity: 0.8; }
+.pl-bar { height: 10px; background: #e2e8f0; border-radius: 6px; margin: 14px 0 4px; overflow: hidden; }
+.pl-bar div { height: 100%; width: 0; background: linear-gradient(90deg, #3b82f6, #22c55e); transition: width 0.5s; }
+.pl-bar-text { font-size: 12px; color: #64748b; text-align: right; }
+.pl-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 12px; margin: 16px 0; }
+.pl-grid label { display: block; font-size: 12px; font-weight: 600; color: #374151; margin-bottom: 4px; }
+.pl-grid input { width: 100%; padding: 9px 10px; border: 2px solid #e2e8f0; border-radius: 8px; font-size: 14px; font-family: inherit; }
+.pl-grid input:focus { outline: none; border-color: #3b82f6; }
+.pl-chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0 16px; }
+.pl-chip { padding: 6px 12px; border-radius: 20px; border: 2px solid #e2e8f0; background: white; font-size: 12px; font-weight: 600; color: #475569; cursor: pointer; font-family: inherit; }
+.pl-chip.on { background: #1e3a5f; border-color: #1e3a5f; color: white; }
+.pl-actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.pl-btn { padding: 10px 18px; border: none; border-radius: 10px; font-size: 13px; font-weight: 700; cursor: pointer; font-family: inherit; }
+.pl-save { background: linear-gradient(135deg, #1e3a5f, #3b82f6); color: white; }
+.pl-alert { background: #f1f5f9; color: #1e3a5f; }
+.pl-msg { font-size: 12px; font-weight: 600; }
+.pl-timeline { margin-top: 18px; display: flex; flex-direction: column; gap: 6px; }
+.pl-slot { display: flex; justify-content: space-between; gap: 10px; padding: 10px 14px; border-radius: 10px; background: #f8fafc; font-size: 13px; color: #334155; border: 2px solid transparent; }
+.pl-slot.brk { color: #94a3b8; }
+.pl-slot.past { opacity: 0.45; text-decoration: line-through; }
+.pl-slot.now { border-color: #22c55e; background: #f0fdf4; font-weight: 700; opacity: 1; text-decoration: none; }
+.pl-total { font-size: 12px; color: #64748b; margin-top: 10px; }
+
+/* FOOTER */
+.main-footer { background: #0f172a; padding: 24px; margin-top: 40px; }
+.footer-content { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+.footer-brand { display: flex; align-items: center; gap: 12px; }
+.footer-logo { font-size: 28px; }
+.footer-brand h3 { font-size: 14px; font-weight: 700; color: white; }
+.footer-brand p { font-size: 12px; color: #64748b; }
+.footer-text p { font-size: 12px; color: #475569; }
+
+#mainApp { background: #f8fafc; min-height: 100vh; }
+#homePage { background: #f8fafc; }
+
+@media (max-width: 600px) {
+  .hero-section { padding: 30px 16px; }
+  .hero-content h2 { font-size: 26px; }
+  .hero-image { display: none; }
+  .brand-text p { display: none; }
+  .subjects-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; }
+  .file-item { flex-direction: column; align-items: flex-start; }
+  .file-actions { width: 100%; }
+}
+</style>
+</head>
+<body>
+
+<!-- LOGIN PAGE -->
+<div id="loginPage">
+  <div class="login-background">
+    <div class="login-card">
+      <div class="login-logo">🎓</div>
+      <h1 class="login-title">Student Academic Library</h1>
+      <p class="login-subtitle">Your Academic World in One Place</p>
+
+      <h2>Welcome 👋</h2>
+      <p class="form-description">Login to continue to your academic library.</p>
+
+      <form id="loginForm" autocomplete="off">
+        <div class="form-group">
+          <label for="loginUser">Email</label>
+          <div class="input-box">
+            <span class="input-icon">👤</span>
+            <input type="email" id="loginUser" placeholder="Enter your email" required autocomplete="email" autocapitalize="none" autocorrect="off" spellcheck="false">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="loginPassword">Password</label>
+          <div class="input-box">
+            <span class="input-icon">🔒</span>
+            <input type="password" id="loginPassword" placeholder="Enter your password" required autocomplete="current-password" autocapitalize="none" autocorrect="off" spellcheck="false">
+            <button type="button" class="toggle-pass" id="togglePass" title="Show / hide password">👁️</button>
+          </div>
+        </div>
+        <button type="submit" class="login-btn" id="loginBtn">Login</button>
+      </form>
+      <p id="loginMessage" class="login-message"></p>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN APP -->
+<div id="mainApp" style="display:none;">
+
+  <header class="main-header">
+    <div class="header-content">
+      <div class="logo-section">
+        <div class="logo">🎓</div>
+        <div class="brand-text">
+          <h1>Student Academic Library</h1>
+          <p>Notes • Assignments • Past Papers • Study Materials</p>
+        </div>
+      </div>
+      <div class="user-section">
+        <div class="user-info">
+          <span class="user-icon">👤</span>
+          <span id="welcomeUser">Welcome</span>
+        </div>
+        <button type="button" id="logoutBtn" class="logout-btn">🚪 Logout</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="homePage">
+    <div class="hero-wrap">
+      <section class="hero-section">
+        <div class="hero-content">
+          <span class="hero-badge">🎓 STUDENT ACADEMIC PLATFORM</span>
+          <h2>Study Smarter.<br>Learn Better.<br><span>Achieve More.</span></h2>
+          <p>Access your notes, assignments, past papers and other academic study materials in one place.</p>
+          <div class="search-container">
+            <span>🔍</span>
+            <input type="text" id="searchInput" placeholder="Search subject...">
+          </div>
+        </div>
+        <div class="hero-image">
+          <div class="hero-book">📚</div>
+          <div class="floating-card card-one">📖 Notes</div>
+          <div class="floating-card card-two">📝 Assignments</div>
+          <div class="floating-card card-three">🎯 Past Papers</div>
+        </div>
+      </section>
+    </div>
+
+    <section class="planner-section">
+      <div class="planner-card">
+        <h2>⏰ Daily Study Planner</h2>
+        <p class="sub">Weka muda wa kuanza na kumaliza kusoma kila siku. Mfumo unakuelekeza lini usome, lini upumzike, na lini umalize.</p>
+
+        <div id="plStatus" class="pl-status">
+          <div class="pl-label" id="plLabel">Loading...</div>
+          <div class="pl-count" id="plCount">--:--:--</div>
+          <div class="pl-sub" id="plSub"></div>
+        </div>
+        <div class="pl-bar"><div id="plBar"></div></div>
+        <div class="pl-bar-text" id="plBarText">0%</div>
+
+        <div class="pl-grid">
+          <div><label for="plStart">Anza (start)</label><input type="time" id="plStartIn" value="16:00"></div>
+          <div><label for="plEnd">Maliza (end)</label><input type="time" id="plEndIn" value="20:00"></div>
+          <div><label for="plSession">Kusoma (dak)</label><input type="number" id="plSessionIn" min="10" max="180" value="50"></div>
+          <div><label for="plBreak">Mapumziko (dak)</label><input type="number" id="plBreakIn" min="0" max="60" value="10"></div>
+        </div>
+
+        <label style="font-size:12px;font-weight:600;color:#374151;">Masomo ya leo (chagua):</label>
+        <div class="pl-chips" id="plChips"></div>
+
+        <div class="pl-actions">
+          <button type="button" class="pl-btn pl-save" id="plSave">💾 Hifadhi Ratiba</button>
+          <button type="button" class="pl-btn pl-alert" id="plNotify">🔔 Washa Kengele</button>
+          <span class="pl-msg" id="plMsg"></span>
+        </div>
+
+        <div class="pl-timeline" id="plTimeline"></div>
+        <div class="pl-total" id="plTotal"></div>
+      </div>
+    </section>
+
+    <section class="subjects-section">
+      <div class="section-heading">
+        <span class="section-label">MY STUDIES</span>
+        <h2>Academic Subjects</h2>
+        <p>Choose a subject to access your study materials.</p>
+      </div>
+      <div id="subjectsGrid" class="subjects-grid"></div>
+    </section>
+  </main>
+
+  <section id="subjectPage" style="display:none;">
+    <div class="subject-page-container">
+      <div class="subject-page-header">
+        <button type="button" class="back-btn" id="backBtn">← Back to Subjects</button>
+        <div class="subject-heading">
+          <span class="section-label">STUDY MATERIALS</span>
+          <h2 id="subjectTitle">Subject</h2>
+          <p id="subjectCount">0 files</p>
+        </div>
+      </div>
+      <div class="file-search-container">
+        <span>🔍</span>
+        <input type="text" id="fileSearchInput" placeholder="Search notes, assignments, past papers...">
+      </div>
+      <div id="fileList" class="file-list"></div>
+    </div>
+  </section>
+
+  <footer class="main-footer">
+    <div class="footer-content">
+      <div class="footer-brand">
+        <div class="footer-logo">🎓</div>
+        <div>
+          <h3>Student Academic Library</h3>
+          <p>Learn • Study • Succeed</p>
+        </div>
+      </div>
+      <div class="footer-text">
+        <p>© 2026 Student Academic Library</p>
+        <p>Notes • Assignments • Past Papers • Study Materials</p>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<script>
+// ============================================================
+// STUDENT ACADEMIC LIBRARY - CORRECTED VERSION
+// ============================================================
+
+// ---------- FIREBASE LOGIN ----------
+// These are public identifiers (safe to keep in the page). Real protection = the accounts you create in Firebase.
+const FIREBASE_CONFIG = {
+  apiKey: "AIzaSyDZC5O-6N82J3YXq3X2iVu5AisLd1JkLiY",
+  authDomain: "maktaba-ya-wanafunzi-2c4be.firebaseapp.com",
+  projectId: "maktaba-ya-wanafunzi-2c4be",
+  storageBucket: "maktaba-ya-wanafunzi-2c4be.firebasestorage.app",
+  messagingSenderId: "22807345443",
+  appId: "1:22807345443:web:d4fc3187e389628fadf496"
+};
+const FIREBASE_BASE = "https://www.gstatic.com/firebasejs/10.12.2/";
+let fbAuth = null;
+let fbApi = null;
+
+// ---------- SUBJECTS & FILES ----------
+// Files marked with a warning sign may have an incomplete name (the Explorer screenshot was cut off).
+const CHECK_FILES = ["21 Irrefutable Laws of LEADERSHIP 21 Irrefutable Laws of Leadership.pdf", "COICT COAF DS 113 TEST-SITTING ARRANGEMENT.pdf", "ALPHA C. CHIANG (4th ed) FUNDAMENTAL METHODS OF MATHEMATICAL ECONOMICS.pdf", "EC 228 QUANTITATIVE METHODS II March 2022(1).docx", "Ian_Jacques_Mathematics_for_Economics_and_Business (BookZZ.org) (1).pdf", "Social Accounting Matrices for Supporting Policy Analysis.pptx", "2 Basic Econometrics - Gujarati[1].pdf - version 1.pdf", "Dougherty C. Introduction to econometrics (3ed., OUP, 2007)(ISBN 019....pdf", "EC230-2021  Lecture Note 4 Theories Of Economic Development Date 20 Tuesday 2021.docx", "EC230-2021 Lecture Note 6 Population Growth and Economic Development  Date 23 June 2021.docx", "EB204 Seminar Tuesday 10 00-10 55COAF LR8 (Responses) - Form Responses 1 - Copy.pdf", "Topic 7_17_May2023.pdf"];
+
+const SUBJECTS = [
+  { id: "EB 202", name: "Agricultural Marketing", icon: "📚", color: "blue", folder: "notes/EB 202", files: [
+    "Agri-food supply chain management in Tanzania_2026_Seminar_Questions.pdf","EB  202_Introduction FINAL_2026_260421_153411.pdf","EB  202_Marketing Efficiency of Agricultural Products.pdf","EB 202 course outline.doc","EB 202 Lecture one FINAL APRIL 2021(0) - Copy.pdf","EB 202 Lecture one FINAL APRIL 2021(0).pdf","EB 202 SEMINAR QUESTIONS-1.docx","EB 202 SEMINAR QUESTIONS.docx","EB 202 Seminar Questions2.docx","EB 202 Topic 2 _2026_Marketing plan_FINAL_4.pptx","EB 202 Topic 3-price and decion- st-study guide shared 2022.pdf","EB 202 Topic 6-efficiency for Agricultural Marketing- study guide shared.pdf","EB 202_Problem Based Learning.pdf","EB 202_Topic #3.ppt","Evaluation Of Marketing Efficiency For Agriculture And Livestock-study guidelines.pdf","FINAL-Marketing Channels of Agricultural and Lives_260430_185628.pdf","FINAL-Marketing Channels of Agricultural and Livestock  Products_2026 FINAL.pdf","Group assignment EB 202.pdf","IMG-20220426-WA0032.jpg","IMG-20220427-WA0000.jpg","IMG-20220427-WA0006.jpg","IMG-20220427-WA0007.jpg","IMG-20220427-WA0008.jpg","IMG-20220427-WA0009.jpg","IMG-20220427-WA0010.jpg","IMG-20220427-WA0011.jpg","Test 2 EB 202 Questions(0).pdf","Test 2 EB 202 Questions.pdf","Topic 2.2022.pptx","Topic 4-Part-2_2022.pptx","Topic 5_Pricing of Agricultural Products_2026_1.pdf","Topic 6-.pdf","Topic MIS.pdf","topic,1.pptx","Topic,3.ppt","topic.1EB202LectureoneFINALAPRIL 2021(0).pdf","topic.2.pptx","Topic.4 2022.pptx","Topic_3-.pdf"
+  ]},
+  { id: "EB 203", name: "Fisheries Economics", icon: "🎣", color: "green", folder: "notes/EB 203", files: [
+    "1623255326470_Bio_economic_analysisofisheries and Management.pdf","Aquaculture introduction-1.pptx","Aquaculture introduction.pptx","Blue Economy-An emerging concept.pptx","CamScanner 03-28-2022 18.58.pdf","Co-management_lecture.ppt","EB 203 FISHERIES ECONOMICS QUIZ ONE.pdf","eb 203 katikiro assignment.docx","EB 203 Lecture 1.pptx","EB 203 Lecture 2 Game theory 2022.pptx","EB 203 Lecture 2.pptx","EB 203 Lecture 4 (2).pptx","EB 203 LECTURE ONE General introduction and overview.pptx","EB 203 PROJECT.docx","EB 203 Reading assignment_06042022.docx","EB 203 Seminar Questions.pdf","EB 203 TESTS-1.pdf","EB 203 TESTS.pdf","EB 204 Course Outline.docx","EB203 1st Assignment..docx","EB203 Fisheries.docx","Fisheries access agreements.pptx","General introduction and overview.pptx","GRP ASSIGNMENT 3. EB203.docx","IUU.pptx","Law of the sea-1.pptx","Law of the sea.pptx","Lecture 1_General introduction and overview_02062020.pptx","Lecture 2-Logistical model of population growth.pptx","Lecture_Fisheries access agreements.pptx","Lecture_IUU.pptx","Lecture_Seafood trade.pptx","Logistical model of population growth.pptx","MPAs lecture_21072020.ppt","Population dynamics-1.pptx","Population dynamics.pptx","Seafood trade.pptx","son-of-peacef.jpg"
+  ]},
+  { id: "EB 204", name: "Business Planning", icon: "💼", color: "orange", folder: "notes/EB 204", files: [
+    "1649337961682_1649316812895_EB 204_Introduction.pdf","1649338009554_Topic 1.pdf","1649338051057_Workable Bus Plan-Template-Feb 2017.doc","Agribusiness Project Appraisal Techniques FINAL.pptx","ANALYSIS OF A MARKET.pptx","Business Model Canvas.pdf","business plan full 1.2.8 (Revised).docx","Business Strategy FINAL JUNE.pdf","Candlestick Biblle-1.pdf","Candlestick Biblle.pdf","EB 204 SEMINAR QUESTIONS.docx","EB 204_Introduction.pptx","EB204 Seminar Tuesday 10 00-10 55COAF LR8 (Responses) - Form Responses 1 - Copy.pdf","EB204 Seminar Tuesday 10 00-10 55COAF LR8 (Responses) - Form Responses 1.pdf","EB204 – BUSINESS PLANNING-SEMINAR QUESTIONS.pptx","Evaluation Of Marketing Efficiency For Agriculture And Livestock-study guidelines.pdf","Generic_Strategies.ppt","Group assignment EB 204.docx","Handout on Porters generic and competitive advantages.doc","Honey production in the United Republic of Tanzania - knoema-1.com","Honey production in the United Republic of Tanzania - knoema.com.temp.bin","Lecture notes 24th June- business plan FINAL.pdf","Personal Development FINAL FINAL 2021.pdf","porters generic and competitive advantage.pdf","Topic 10 - Strategic analysis and choice.pdf","Topic 13 - The structural drivers and instruments for strategy implementation.pdf","Topic 2.pdf","Topic 3(0).pdf","Topic 3.pdf","Topic 4.pdf","Topic 8 - The Business Model Canvas as a strategic tool.pdf"
+  ]},
+  { id: "EB 305", name: "International Economics", icon: "🌍", color: "purple", folder: "notes/EB305", files: [
+    "Arguments against international trade.docx","DOC-20230428-WA0026..docx","Dominick-Salvatore-International-Economics.pdf","EB 305 -Spatial Market and Inter-regional Trade-MF May2023.pdf","EB 305 Course Outline-2023.docx","EB 305 COURSE OUTLINE.pdf","EB 305 Future markets-class guide Review 22062022-S.pdf","EB 305 Future markets-class guide Review 27062023.pdf","EB 305 International Economics Questions.docx","EB 305 SEMINAR  GROUP QUESTIONS.pdf","EB 305 SEMINAR QUESTIONS PART TWO FINAL-1.docx","EB 305 SEMINAR QUESTIONS PART TWO FINAL.docx","EB 305-Topic 4-Exchange Rates.pptx","EB 305_Topic 3_International Trade_Student version(0).pptx","EB 305_Topic 4_Exchange Rates.pptx","EB 305Topic 1  -spatial market.pdf","EB 305Topic one  -spatial 01062022-student study guide shared(0).pdf","IMG-20230524-WA0003.jpg","IMG-20230524-WA0004.jpg","IMG-20230524-WA0005.jpg","IMG-20230524-WA0006.jpg","IMG-20230524-WA0007.jpg","IMG-20230524-WA0008.jpg","IMG-20230524-WA0009.jpg","IMG-20230524-WA0010.jpg","IMG-20230524-WA0011.jpg","IMG-20230524-WA0012.jpg","TOPIC 1 SPATIAL AND INTER - TEMPORAL MARKET-student notes1-1.pptx"
+  ]},
+  { id: "EB 306", name: "Environmental Impact Assessment", icon: "🌱", color: "teal", folder: "notes/EB306", files: [
+    "1680535048111_EB 306_Topic 1.pptx","306.docx","Appraisal materials_IMPORTANT.pdf","Appraisal materials_REFERENCE BOOK.pdf","DISCOUNTED PAY BACK PERIOD.docx","EB 306 COURSE OUTLINE.docx","EB 306 SEMINAR QUESTIONS II-1.docx","EB 306 SEMINAR QUESTIONS II.docx","EB 306-logic Model.pdf","EB 306_EIA.docx","EB 306_Topic 1.pptx","EB 306_Topic 2.pptx","EB 306_Topic 2_Lecture notes.pptx","EIA IN TANZANIA-1.pptx","EIA IN TANZANIA.pptx","EIA NOTES_PART I_INTRODUCTION.pptx","EIA NOTES_PART II_EIA METHODS.pptx","EIA NOTES_PART III_EIA IN TANZANIA.pptx","EIA Reading Guide.docx","EIA TOOLS-1.pptx","EIA TOOLS.pptx","EIA.pptx","EIA_and_Audit_Procedures-tanzania.pdf","EIA_EA_REGULATIONS_2004[1].pdf","Environmental_Management_Act_2004.pdf","IMG-20230511-WA0012.jpg","IMG-20230512-WA0009.jpg","IMG-20230512-WA0010.jpg","IMG-20230512-WA0011.jpg","IMG-20230512-WA0012.jpg","IMG-20230513-WA0000.jpg","IMG-20230513-WA0002.jpg","IMG-20230513-WA0004.jpg","IMG-20230513-WA0008.jpg","IMG-20230513-WA0009.jpg","IMG-20230513-WA0010.jpg","IMG-20230513-WA0011.jpg","IMG-20230513-WA0012.jpg","IMG-20230513-WA0013.jpg","IMG-20230513-WA0014.jpg","IMG-20230513-WA0015.jpg","IMG-20230513-WA0016.jpg","IMG-20230513-WA0017.jpg","IMG-20230513-WA0018.jpg","IMG-20230513-WA0022.jpg","impact_data_analyzed.dta","impact_evaluation 1.pptx","impact_evaluation_June2022(0).pptx","impact_evaluation_June2022(1).pptx","impact_evaluation_June2022.pptx","impact_evaluation_June2023_12.pdf","LOGIC MODAL-1.docx","LOGIC MODAL.docx","LOGIC MODEL ASSIGNMENT.docx","Logic model_additional Materials.pdf","METHODS FOR EIA.pdf","national_environmental_policy_1997.pdf","Project Cycle1.pptx","project cycle2_Introd to M&E.pptx","PROJECT CYCLE_MAY-2023.pdf","Seminar questions.docx","Solvings EB 306.docx","Solvings01 Eb 306.docx","Tanzania_PADEP_EIA_Report.pdf","UDSM-IRA BOOK.pdf","valuation for EIA-1.pptx","valuation for EIA.pptx"
+  ]},
+  { id: "EB 308", name: "GIS & Business IT", icon: "💻", color: "cyan", folder: "notes/EB308", files: [
+    "1. EB 308 Assessment Methods and Teaching Plan_March 2022.pptx","3. Geographic Information Systems (GIS).pptx","ABCD-Enterprise - Copy.xlsx","ANEB_Assigment.xlsx","Business analysis using excel_Guide.pdf","Business Analysis using excel_May_2021..pptx","Business Intelligence 20212022.pdf","Business Intelligence 20222023.pptx","EB 308 Assignment.docx","EB 308 Course Introduction.pptx","EB 308 Database, Business Intelligence and Information Management.pptx","EB 308 Group Assignment Guidelines to Work with.docx","EB 308 IS for Business planning and Mgt.pptx","EB 308 IT Infrastructure and Emerging Techs.pptx","EB 308 Topic 1.pptx","Geographic Information Systems (GIS)_New.pptx","GIS in Agriculture new.pptx","IMG-20230720-WA0017.jpg","IMG-20230720-WA0018.jpg","IMG-20230720-WA0019.jpg","IMG-20230720-WA0020.jpg","Vlookup_Data.xlsx"
+  ]},
+  { id: "EB 309", name: "Environmental Economics", icon: "🌿", color: "emerald", folder: "notes/EB309", files: [
+    "260_Ch5_Enviro_Model.pdf","EB 309 Lecture 1-1.pptx","EB 309 Lecture 1.pptx","EB 309 questions .pdf","EB 309 SEMINAR REVIEW QUESTIONS.pdf","IMG-20230520-WA0001.jpg","IMG-20230520-WA0002.jpg","IMG-20230520-WA0003.jpg","IMG-20230520-WA0004.jpg","IMG-20230520-WA0005.jpg","IMG-20230520-WA0006.jpg","IMG-20230520-WA0007.jpg","lecture 1 309-2.pptx","lecture 1 309_2021.pdf","lecture 2 309-1.pptx","lecture 2 309_2021.pdf","Lecture 3.pptx","Lecture 4-1.pptx","Lecture 4_2022.pptx","Lecture 5 Economics of Pollution Control.pptx","Lecture 6_17June2022 Population and Environment.pptx","Lecture 7_international environmental problems.pptx","Lecture 7bInternationall environmental problems.pptx","Lecture 8 Decarbonization.pptx","lecture o natural gas_May_24_2022.pptx","Topic 3_Market Failures.pptx","TOPIC 4_Strategic interactions.pdf","Topic 5_pollution 29 May.pptx","Topic 6_economics of population.pdf","Topic 7_17_May2023.pdf","TOPIC 8 Carbon pricing.pdf"
+  ]},
+  { id: "EC 126", name: "Economics", icon: "📈", color: "red", folder: "notes/EC 126", files: [
+    "86229230127480832.pdf","Barriers to ent-WPS Office.doc","DESAPOINT_468_EC216_bach_1.pdf","E.mansfield&G.YOhe 126 party2.pdf","EC 126 qns general equilibrium-1.pdf","EC 126 slides-Topic 2_July 2020 -revised.pdf","EC 126 slides-TOPIC 3_2020_short.pdf","EC 126 Topic 2&3 SEMINAR QUESTIONS_June 2021.pdf","EC 126_COURSE OUTLINE_1_2018 (1).docx","EC 126_Seminar questions April 2021.pdf","Edwin Mansfield & Gary yohe 126 part 1.pdf","Externalities,Public goods and Public choiçe.pdf","monopolistic market.pptx","MONOPOLY MARKET-1.pptx","N._Gregory_Mankiw_Principles_of_Microeconomics.pdf","null-2.pdf","OLIGOPOLY MARKETS.pdf","principle of microeconomics greenlaw.pdf"
+  ]},
+  { id: "EC 228", name: "Economics", icon: "📊", color: "indigo", folder: "notes/EC 228", files: [
+    "1638358902770_EB 200 Topic 3 - 2021 Final.pptx","2003_Econimpacts_inputoutput.ppt","228 test 2.pdf","4.7 Leontief Input-Output Analysis.ppt","ALPHA C. CHIANG (4th ed) FUNDAMENTAL METHODS OF MATHEMATICAL ECONOMICS.pdf","assignment.docx","CamScanner 03-24-2022 09.29.pdf","Chapter 4 - Duality in Linear Programming.pdf","Determinants.pdf","dowling_-_suppelemntary - Copy.pdf","dowling_-_suppelemntary.pdf","EC 228 -Input-Output Analysis.pdf","Ec 228 course outline.pdf","EC 228 QUANTITATIVE METHODS II March 2022(1).docx","EC 228 SEMINAR QUESTIONS.pdf","EC 228.pdf","EC 228_PP Notes_Linear Programming.pptx","EC 228_PP Notes_LP_Duality.pptx","EC228 Review April 2022(1)-1.docx","EC228 Review April 2022(1).docx","EC228 Review Revised Extended 28 April 2021-1.doc","EC228 Review Revised Extended 28 April 2021.doc","Ian_Jacques_Mathematics_for_Economics_and_Business (BookZZ.org) (1).pdf","Input – Output Analysis.ppt","Lecture # 6 - Input-Output Analysis.pdf","LECTURE_ONE.pptx","Leonteif input output barnfm10e_ppt_4_7.ppt","LP 2022-1.ppt","QM Exercise..pdf","SAM and their use in Economic modeling.ppt","Social Accounting Matrices for Supporting Policy Analysis.pptx","Test 228 qm.pdf"
+  ]},
+  { id: "EC 229", name: "Economics", icon: "📉", color: "pink", folder: "notes/EC 229", files: [
+    "2 Basic Econometrics - Gujarati[1].pdf - version 1.pdf","20.Samplingtechniques (4).pdf","3. EC229_Dummy_Variables.pdf","4. Specification of Regression Variables.pdf","ASSIGNMENT-EC 229 -July 2021.docx","Assignment_Two_answer.docx","autocorrelation-Lecture Slides.ppt","Basic Econometrics by Damodar Gujarati, Dawn Porter (z-lib.org).pdf","Basic Econometrics-QUESTIONS students.docx","Basic Econometrics.pdf","BOOK - student solutions 4ed gujarati (2).pdf","Chapter 16 Heteroskedasticity.pdf","Chapter 5 Hypothesis Testing.ppt","Chapter 9 Dummy Variables.ppt","Chapter9-Regression-Multicollinearity.pdf","classmatetz.com.docx","DESAPOINT_457_EC229_PP_18th_16.pdf","DESAPOINT_595_EC229_0003.pdf","DESAPOINT_597_EC229_0001.pdf","DESAPOINT_598_EC229_8.pdf","Desapoint_EC229_joel.pdf","DOC-20190613-WA0058.pdf","Dougherty C. Introduction to econometrics (3ed., OUP, 2007)(ISBN 019....pdf","Dummy Dependent Variables Models.ppt","DUMMY VARIABLE.pdf","EC 229 .pptx","Ec 229 Gaka.pdf","ec 229 seminar question.pdf","Ec 229 soln for seminar qn's sheet 2.pdf","EC 229 SOLUTION.pdf","Ec 229 test 2.pdf","EC 229 test-1.pdf","EC 229 test.pdf","EC 229 Tests-1.pdf","EC 229 Tests.pdf","EC 229 Topic 3-2.pdf","EC 229.docx","EC 229.pdf","Ec 229test marking scheme-1.pdf","Ec 229test marking scheme.pdf","EC 230 PPT  Topic 02. THE ECONOMICS OF UNDERDEVELOPMENT.pptx","EC219_leyalo.pdf","EC219_topic3.pdf","EC229 Review Questions(0).docx","EC229 Review Questions-1.docx","EC229 Review Questions.pdf","EC229 Review Questions1.pdf","EC229 SAMPLE REVIEW QUESTIONS- MAY 2022.docx","EC229 seminar questions (1).pdf","EC229_bach_1.pdf","EC229_bach_2.pdf","EC229_bach_3-1.pdf","EC229_bach_4.pdf","EC229_DP_1.pdf","EC229_DP_4.pdf","EC229_Topic2_Transformation_of_Variables.pdf","ECONOMETRIC HACKERS.pdf","Economics.docx","FORMAL HETEROSCEDASTICITY TESTS-2.pptx","Gujarati Og.pdf","HETEROSCEDASTICITY & MEASUREMENT ERROR Review Questions.docx","Heteroscedasticity-1.ppt","Heteroscedasticity.pdf","HETEROSCEDASTICITY.pptm.pptx","Heteroskedasticity & Autocorrelation.pdf","Heteroskedasticity.pdf","HYPOTHESIS TESTING review questions.docx","HYPOTHESIS TESTING.pptx","HypothesisTestingpart1.pdf","Introduction Autocorrelation Lecture Ten.ppt","Introduction to econometrics by Christopher Dougherty (z-lib.org).pdf","lecture 16(0).pdf","MEASUREMENT ERROR.pptx","Measurement Errors EC229 JUNE 2021.pptx","MULTICOLLINEARITY SAMIJI.pdf","Numerical Analysis-Burden&Faires.pdf","Seminar question soln, Econometrics..pdf","seminar questions_1.docx","Simultaneous equation model from net.pdf","Simultaneous..Equation Models (1).pdf","soln review qns 229.pdf","StatistialTables.pdf","STRONG ECONOMETRICS BOOK(0).pdf","STRONG ECONOMETRICS BOOK.pdf","Student_Solutions_Manual_for_use_with_Basic_Econometrics-eecaucv.blogspot.com.pdf","Transformation of variables (1).pptx","TRANSFORMATION OF VARIABLES.pdf","TRANSFORMATION%20OF%20VARIABLES0001.pdf","UNIVERSITY OF DAR ES SALAAM.pdf"
+  ]},
+  { id: "EC 230", name: "Economics", icon: "💰", color: "yellow", folder: "notes/EC 230", files: [
+    "1623255326470_Bio_economic_analysisofisheries and Management.pdf","_Ec_230_slide_(history_&_economics_development).pdf","CamScanner 03-30-2022 22.15.pdf","EB 203 Fisheries Economics and Management_Seminar 2_04042022.docx","EB 203 FISHERIES ECONOMICS QUIZ ONE.pdf","Ec 220 DEVELOPEMENT ECONOMICS 1 TEST 1.pdf","Ec 230 Development Economics II Semester II TEST.pdf","EC 230 PPT  Topic 02. THE ECONOMICS OF UNDERDEVELOPMENT.pptx","EC 230 Proximate, ultimate factors by Prof Moshi.pdf","EC 230 Reading Materials,from Prof.H.B.Moshi06-17-2022 08.42.pdf","EC 230 SEMINAR QUESTION  06-17-2022 16.27.pdf","EC 230 Test 2 Scanner 05-10-2021 16.52-1.pdf","EC 230 Test 2 Scanner 05-10-2021 16.52.pdf","Ec 230 Topic 3 pdf_033053.pdf","Ec 230 Topic 3 pdf_0330535.pdf","ec 230.pdf","EC230-2021  Lecture Note 1 An Introduction to Underdevelopment  Date 13 April 2021.docx","EC230-2021  Lecture Note 2 Concepts of Underdevelopment  Date 13 April 2021.docx","EC230-2021  Lecture Note 3 Types of Economic Development  Systems  Date 14 April 2021.docx","EC230-2021  Lecture Note 4 Theories Of Economic Development Date 20 Tuesday 2021.docx","EC230-2021  Lecture Note 5 Theories Of Wealth Creation  Date 21 Wenesday  2021.docx","Ec230-2021  Lecture Note 7 World Population Growth  Date 23 June 2021.doc","Ec230-2021  Lecture Note 8 Human Development Issues  Date 30 June 2021.doc","Ec230-2021  Lecture Note 9 Factors of Development Issues  Date 30 June 2021.doc","EC230-2021 Lecture Note 10 On Human Capital Development II  Date 30 June 2021.docx","EC230-2021 Lecture Note 6 Population Growth and Economic Development  Date 23 June 2021.docx","EC230-2021 Lecture Note 9 On Human Capital Development   Date 30 June 2021.docx","Economic Growth and Economic Development (2).pdf","ECONOMICS 230 NOTES (2) (1).ppt","ECONOMICS 230 NOTES (2).ppt","ECONOMICS 230 NOTES (3).ppt","ECONOMICS 230 NOTES-1.ppt","Human Capital EC230.pdf","Logistical model of population growth (1).pdf","New Doc 2019-06-13 12.12.03.pdf","Seminar Questions EC 220.docx","txtbook_3.ed_att00106.pdf","Vision2025.pdf","VIWAWA DSM (1).pdf"
+  ]},
+  { id: "EC 377", name: "Economics", icon: "📐", color: "violet", folder: "notes/EC377", files: [
+    "EC 377 Choice of techniques and technology topics 1.pdf","EC 377 SOLUTIONS.pdf","EC377-2021  Lecture 6 Profit Maximazation  Date 22 June 2021.doc","EC377-2021  Lecture Note 2 Production Function  Date 15 June 2021.doc","EC377-2022  Lecture 3 -2  More on Cost Functions  Date 01 June 2022.doc","EC377-2022  Lecture 3 -3  Cost Minimization More Detailed  Date 01 June 2022.doc","Individual assignment.docx","Revision EC-377 Questions  Date 22 June 2021.doc","The economics of grain milling in Tanzania.pdf","THEORY.pdf"
+  ]},
+  { id: "EC 382", name: "Economics", icon: "📚", color: "blue", folder: "notes/EC382", files: [
+    "Budget Frame_2020-21 Budget.doc","calton jr-1.docx","calton jr.docx","CamScanner 07-05-2023 16.32.pdf","EC 382 ARRANGEMENT.docx","EC 382 SEMINAR QUESTIONS.pdf","EC 382_ Seminar Qns_Cost-Benefit Analysis_August 2023.doc","EC 382_ Seminar Qns_Public Expenditure & Budget_April 2023.doc","EC 382_ Seminar Questions_Budget_May 2021.doc","EC 382_PP Notes_Cost-Benefit Analysis_PRIVATE_2023.pptx","EC 382_PP Notes_Government Budget_2022.pptx","EC 382_PP Notes_Government Expenditure System(0).pptx","EC 382_PP Notes_Government Expenditure System.pptx","EC 382_PP Notes_Incidence of Government Budget_2021.pptx","EC 382_PP Notes_Public Expenditure.pptx","EC 382_PUBLIC SECTOR ECONOMICS II_COURSE OUTLINE.doc","EC 382_PUBLIC SECTOR ECONOMICS II_PP Notes.pptx","EC382 COST-BENEFIT ANALYSIS.pptx","EC382 FINAL.doc","EC382 FULL.docx","EC382 TOPIC3.pptx","handout7_with_solutions (1).pdf","IMG-20230616-WA0011.jpg","IMG-20230620-WA0007.jpg","IMG-20230701-WA0004.jpg","IMG-20230705-WA0005.jpg","IMG-20230706-WA0009.jpg","IMG-20230707-WA0000.jpg","IMG-20230707-WA0008.jpg","IMG-20230707-WA0009.jpg","IMG-20230709-WA0001.jpg","IMG-20230709-WA0002.jpg","Marking scheme test 2 EC 382.pdf","Review Questions Set 1.docx","Review questions set 3.docx","Review Questions set 4.docx","Review Questions set 5-1.docx","Review Questions set 5.docx","Review Questions set II.docx","Seminar question3.docx","seminar questions.docx","SOLUTION OF THE TAXIATION SEMINAR QUESTION ggs(0).pdf","SOLUTION OF THE TAXIATION SEMINAR QUESTION ggs.pdf","Syllabi EC (All).pdf","Taxation solution.pdf","Taxation-1.pptx","TAXATION.pptx"
+  ]},
+  { id: "Econometrics", name: "Econometrics Materials", icon: "📊", color: "dark-blue", folder: "notes/econometrics", files: [
+    "1764952609829_1764952433769_Introduction to Econometrics.pptx","2 Simple regression model estimation and properties.pdf","CHAPTER 3- Introduction to Regression Methods.pptx","Chapter 5 Hypothesis Testing.pptx","Discrete and Continuous random variables.pptx","Dougherty.pdf","ECONOMETRICS WORK(1).docx","ECONOMETRICS WORK.docx","Introduction to basic probability concepts.pptx","linear regression.pdf","QUALITATIVE RESPONSE MODELS.pptx","summary REGRESSION MODEL.pdf","TS Lecture Slides.pdf"
+  ]},
+  { id: "GPS & GIS DATA", name: "GPS & GIS Materials", icon: "🗺️", color: "green", folder: "notes/GPS & GIS DATA", files: [
+    "BasicFilesSC.xls","Crop Diversification.csv","Districts.dbf","Districts.prj","Districts.sbn","Districts.sbx","Districts.shp","Districts.shp.xml","Districts.shx","DSMW.dbf","DSMW.lyr","DSMW.sbn","DSMW.sbx","DSMW.shp","DSMW.shp.xml","DSMW.shx","DSMW_noborder.lyr","Generalized_SU_Info.xls","International_Boundary.dbf","International_Boundary.prj","International_Boundary.sbn","International_Boundary.sbx","International_Boundary.shp","International_Boundary.shp.xml","International_Boundary.shx","license.txt","morning sesion stata.dta","NEW Assignment.gpx","prince mlaki.dta","readme.doc","Regions.dbf","Regions.prj","Regions.shp","Regions.shp.xml","Regions.shx","SoilData.doc","SU_Info.xls","Track_AREEE05-05 141919.gpx","Track_ATB area8 110427.gpx","Track_COAF  PARKING4752.gpx","Track_COAF BUILDING311.gpx","Track_COET BLOCK O PARKING AREA.gpx","Track_COETT.gpx","Track_CONAS BUILDING2413.gpx","Track_CONFUCIOUS.gpx","Track_CRICKET-PIAYGROUND.gpx","Track_CRICKET.gpx","Track_CRR.gpx","Track_GROUND1 08 112307.gpx","Track_HAII405-05 105450.gpx","Track_HALL 03 143206.gpx","Track_HALL 3 -08 114703.gpx","Track_HALL 7 PARKING1042.gpx","Track_HALL04 BLD.gpx","Track_HALL4BLD05 110147.gpx","Track_NEW LIB-22 071708.gpx","Track_NKRM.gpx","Track_NKURUMAH HALL AREA.gpx","Track_NKURUMAHHALL104121.gpx","Track_OL.gpx","Track_PICR.gpx","Track_PO.gpx","Track_SCIENCE 29 165457.gpx","Track_TENIS.gpx","Track_Theater 130848.gpx","Track_THEATER2.gpx","Track_UTAWALA PARKING.gpx","Track_UTAWALA SP.gpx","Track_YOMBO 4 22 072600.gpx","Track_YOMBO4.gpx","Track_YOMBO54-21 095749.gpx","TZA_adm0.cpg","TZA_adm0.csv","TZA_adm0.dbf","TZA_adm0.prj","TZA_adm0.shp","TZA_adm0.shx","TZA_adm1.cpg","TZA_adm1.csv","TZA_adm1.dbf","TZA_adm1.prj","TZA_adm1.shp","TZA_adm1.shx","TZA_adm2.cpg","TZA_adm2.csv","TZA_adm2.dbf","TZA_adm2.prj","TZA_adm2.shp","TZA_adm2.shx","TZA_adm3.cpg","TZA_adm3.csv","TZA_adm3.dbf","TZA_adm3.prj","TZA_adm3.shp","TZA_adm3.shx","tza_pop.grd","tza_pop.gri","tza_pop.vrt","victoria .sav.sav","Victoria data.xlsx","Water_Body.dbf","Water_Body.prj","Water_Body.sbn","Water_Body.sbx","Water_Body.shp","Water_Body.shp.xml","Water_Body.shx","WORLD764.xls"
+  ]},
+  { id: "STATA", name: "STATA Study Materials", icon: "📈", color: "orange", folder: "notes/STATA", files: [
+    "Age.dta","Business calendar Do-file.do","CLASS.dta","comm.do","comm1.do","CORR.xlsx","corruption data.dta","corruption dataset.dta","crop.data.csv","datar.xlsx","demand price GDP.do","demand.xlsx","EB 306 practical 1_11_05_2021.xlsx","ecm.do","enegy demand.dta","energy demand.dta","Energy demand.xlsx","Energy demand1-1.xlsx","EuData error correction Do-file.do","EuData.dta","Exampe.xlsx","first.do","Harvest data.xlsx","Harvest dataset.xlsx","height new.xlsx","impact_data.dta","impact_data1.dta","kalinga.do","liwale commercialization.dta","maize productivity.dta","new count if.do","NLSYW dataset.dta","oil and gas price data.csv","panel_2.dta","panel_2020.dta","prac.do","practice_December2019.xlsx","reserve.do","sample 1.do","seminarAA.dta","stata visualization.do","study.do","tes.do","test1-2020b (1).xlsx","test1-2020b.xlsx","test1-2020c.dta","test1_2020a.xlsx","test1_data.xlsx","test2_2.xlsx","test_data_modified.dta","tseries analysis monday seminar.do","ttest &summary stata.do","Untitled5.do","victoria data.sav","victoria.dta","victoria_26.dta","victoria_data.dta","victoria_data.xls","wage panel data.dta","Wednesday  stata seminar.do"
+  ]},
+  { id: "SPSS", name: "SPSS Notes & Materials", icon: "📊", color: "purple", folder: "notes/SPSS Notes", files: [
+    "SPSS_Handbook_2004[1].pdf","Templete Disign Notes.pdf"
+  ]},
+  { id: "Leadership", name: "Leadership Materials", icon: "👥", color: "red", folder: "notes/Leadership", files: [
+    "21 Irrefutable Laws of LEADERSHIP 21 Irrefutable Laws of Leadership.pdf","Coaf candidates.pdf","CoAF ELECT LEADERS.pdf","CoAF.pdf","COICT COAF DS 113 TEST-SITTING ARRANGEMENT.pdf","CONTESTING FORM.pdf","DARUSO Constitution.pdf","Group J1-J2 (Agricultural Engineering).xlsx","joyce.docx","KANUNI ZA BUNGE (DARUSO).pdf","MKEKA WA BARAZA LA MAWAZIRI.pdf","Registered Voters list.xls","soaf candidates.pdf","Succesful candidates Coaf.pdf","SUGECO+PROFILE_Final.pdf","TAARIFA KWA VIONGOZI.pdf","the_21_irrefutable_laws_of_leadership.pdf","UDSM STUDENTS BYLAWS .pdf"
+  ]}
+];
+
+// ---------- HELPERS ----------
+function $(id) { return document.getElementById(id); }
+
+function escapeHTML(text) {
+  return String(text)
+    .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+}
+
+function getFileIcon(filename) {
+  const ext = filename.split(".").pop().toLowerCase();
+  const icons = {
+    pdf: "📄", doc: "📝", docx: "📝", ppt: "📊", pptx: "📊", pptm: "📊",
+    xls: "📈", xlsx: "📈", csv: "📈", jpg: "🖼️", jpeg: "🖼️", png: "🖼️",
+    txt: "📃", dta: "🗃️", sav: "🗃️", do: "⚙️", shp: "🗺️", gpx: "📍",
+    zip: "🗜️", rar: "🗜️"
+  };
+  return icons[ext] || "📁";
+}
+
+function fileURL(subject, filename) {
+  // encode each part of the path so spaces and "&" work correctly
+  return subject.folder.split("/").map(encodeURIComponent).join("/") +
+         "/" + encodeURIComponent(filename);
+}
+
+let currentSubject = null;
+
+// ---------- PAGES ----------
+function showHome() {
+  currentSubject = null;
+  $("homePage").style.display = "block";
+  $("subjectPage").style.display = "none";
+  window.scrollTo(0, 0);
+}
+
+function renderSubjects() {
+  const grid = $("subjectsGrid");
+  grid.innerHTML = "";
+  SUBJECTS.forEach(function (s) {
+    const card = document.createElement("div");
+    card.className = "subject-card";
+    card.dataset.name = (s.id + " " + s.name).toLowerCase();
+    card.innerHTML =
+      '<div class="subject-card-top">' +
+        '<div class="subject-icon ' + s.color + '">' + s.icon + '</div>' +
+        '<span class="arrow">→</span>' +
+      '</div>' +
+      '<h3>' + escapeHTML(s.id) + '</h3>' +
+      '<p>' + escapeHTML(s.name) + '</p>' +
+      '<div class="subject-footer">📄 ' + s.files.length + ' Materials</div>';
+    card.addEventListener("click", function () { openSubject(s); });
+    grid.appendChild(card);
+  });
+}
+
+function filterSubjects() {
+  const q = $("searchInput").value.toLowerCase().trim();
+  document.querySelectorAll(".subject-card").forEach(function (card) {
+    card.style.display = card.dataset.name.includes(q) ? "" : "none";
+  });
+}
+
+function openSubject(subject) {
+  currentSubject = subject;
+  $("homePage").style.display = "none";
+  $("subjectPage").style.display = "block";
+  $("subjectTitle").textContent = subject.id + " — " + subject.name;
+  $("subjectCount").textContent = subject.files.length + " files";
+  $("fileSearchInput").value = "";
+  renderFileList("");
+  window.scrollTo(0, 0);
+}
+
+function renderFileList(query) {
+  const list = $("fileList");
+  list.innerHTML = "";
+  if (!currentSubject) { return; }
+
+  const files = currentSubject.files;
+  const q = String(query).toLowerCase().trim();
+
+  if (files.length === 0) {
+    list.innerHTML = '<div class="no-files">No files available for this subject.</div>';
+    return;
+  }
+
+  let shown = 0;
+  files.forEach(function (filename, index) {
+    if (q && !filename.toLowerCase().includes(q)) { return; }
+    shown++;
+
+    const url = fileURL(currentSubject, filename);
+    const item = document.createElement("div");
+    item.className = "file-item";
+    item.innerHTML =
+      '<div class="file-item-left">' +
+        '<span class="file-num">' + (index + 1) + '</span>' +
+        '<span class="file-item-icon">' + getFileIcon(filename) + '</span>' +
+        '<span class="file-item-name" title="' + escapeHTML(filename) + '">' + escapeHTML(filename) + (CHECK_FILES.indexOf(filename) >= 0 ? ' \u26a0\ufe0f' : '') + '</span>' +
+      '</div>' +
+      '<div class="file-actions">' +
+        '<a class="file-btn open-btn" target="_blank" rel="noopener" href="' + escapeHTML(url) + '">👁️ Open</a>' +
+        '<a class="file-btn download-btn" download="' + escapeHTML(filename) + '" href="' + escapeHTML(url) + '">⬇️ Download</a>' +
+      '</div>';
+    list.appendChild(item);
+  });
+
+  if (shown === 0) {
+    list.innerHTML = '<div class="no-files">🔍 No file found for "<strong>' + escapeHTML(query) + '</strong>"</div>';
+  }
+}
+
+// ---------- LOGIN / LOGOUT ----------
+function showMainApp(user) {
+  $("loginPage").style.display = "none";
+  $("mainApp").style.display = "block";
+  $("welcomeUser").textContent = "Welcome, " + user.name + " 👋";
+  renderSubjects();
+  initPlanner();
+  showHome();
+}
+
+function showLoginPage() {
+  $("mainApp").style.display = "none";
+  $("loginPage").style.display = "flex";   // flex keeps the card centered
+  $("loginPassword").value = "";
+  $("loginMessage").textContent = "";
+}
+
+function authErrorText(code) {
+  if (code === "auth/invalid-credential" || code === "auth/wrong-password" || code === "auth/user-not-found" || code === "auth/invalid-login-credentials") {
+    return "❌ Email au nenosiri si sahihi.";
+  }
+  if (code === "auth/invalid-email") { return "❌ Email uliyoandika si sahihi."; }
+  if (code === "auth/too-many-requests") { return "❌ Umejaribu mara nyingi. Subiri kidogo kisha ujaribu tena."; }
+  if (code === "auth/network-request-failed") { return "❌ Hakuna mtandao. Angalia data au Wi-Fi."; }
+  if (code === "auth/user-disabled") { return "❌ Akaunti hii imezimwa."; }
+  if (code === "auth/api-key-not-valid" || code === "auth/invalid-api-key") { return "❌ Config ya Firebase si sahihi (apiKey)."; }
+  return "❌ Imeshindwa kuingia (" + (code || "kosa") + ").";
+}
+
+async function loginUser(event) {
+  event.preventDefault();
+  const btn = $("loginBtn");
+  const msg = $("loginMessage");
+  const email = $("loginUser").value.trim();
+  const pass = $("loginPassword").value;
+
+  if (!email || !pass) {
+    msg.style.color = "#dc2626";
+    msg.textContent = "❌ Andika email na nenosiri.";
+    return;
+  }
+  if (!fbAuth || !fbApi) {
+    msg.style.color = "#dc2626";
+    msg.textContent = "❌ Firebase haijawa tayari. Angalia mtandao kisha refresh.";
+    return;
+  }
+
+  btn.disabled = true;
+  msg.style.color = "#64748b";
+  msg.textContent = "Inaingia...";
+  try {
+    await fbApi.signInWithEmailAndPassword(fbAuth, email, pass);
+    msg.textContent = "";
+    // onAuthStateChanged will open the library
+  } catch (e) {
+    msg.style.color = "#dc2626";
+    msg.textContent = authErrorText(e && e.code);
+  }
+  btn.disabled = false;
+}
+
+async function logoutUser() {
+  try { if (fbAuth && fbApi) { await fbApi.signOut(fbAuth); } } catch (e) {}
+  showLoginPage();
+}
+
+async function initFirebase() {
+  try {
+    const appMod = await import(FIREBASE_BASE + "firebase-app.js");
+    const authMod = await import(FIREBASE_BASE + "firebase-auth.js");
+    const app = appMod.initializeApp(FIREBASE_CONFIG);
+    fbAuth = authMod.getAuth(app);
+    fbApi = authMod;
+    authMod.onAuthStateChanged(fbAuth, function (user) {
+      if (user) {
+        showMainApp({ name: (user.email || "Student").split("@")[0] });
+      } else {
+        showLoginPage();
+      }
+    });
+  } catch (e) {
+    showLoginPage();
+    const msg = $("loginMessage");
+    msg.style.color = "#dc2626";
+    msg.textContent = "❌ Imeshindwa kuunganisha na Firebase. Angalia mtandao kisha refresh.";
+  }
+}
+
+// ---------- DAILY STUDY PLANNER ----------
+const PLAN_KEY = "sal_study_plan";
+let plan = { start: "16:00", end: "20:00", session: 50, brk: 10, subjects: [] };
+let plSlots = [];
+let plLastIdx = -2;
+let plTimer = null;
+
+function toMin(hhmm) { const a = hhmm.split(":"); return parseInt(a[0], 10) * 60 + parseInt(a[1], 10); }
+function fmtMin(m) { const h = Math.floor(m / 60) % 24; const mm = m % 60; return String(h).padStart(2, "0") + ":" + String(mm).padStart(2, "0"); }
+function fmtSec(t) {
+  t = Math.max(0, Math.floor(t));
+  const h = Math.floor(t / 3600), m = Math.floor((t % 3600) / 60), s = t % 60;
+  return String(h).padStart(2, "0") + ":" + String(m).padStart(2, "0") + ":" + String(s).padStart(2, "0");
+}
+
+function loadPlan() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(PLAN_KEY));
+    if (saved && saved.start && saved.end) { plan = saved; }
+  } catch (e) {}
+}
+
+function savePlanStorage() {
+  try { localStorage.setItem(PLAN_KEY, JSON.stringify(plan)); } catch (e) {}
+}
+
+function buildSlots() {
+  plSlots = [];
+  const start = toMin(plan.start), end = toMin(plan.end);
+  if (isNaN(start) || isNaN(end) || end <= start) { return; }
+  let t = start, n = 0;
+  while (t < end) {
+    const sEnd = Math.min(t + plan.session, end);
+    const subj = plan.subjects.length ? plan.subjects[n % plan.subjects.length] : "Free study";
+    plSlots.push({ type: "study", from: t, to: sEnd, subject: subj });
+    n++;
+    t = sEnd;
+    if (t < end && plan.brk > 0) {
+      const bEnd = Math.min(t + plan.brk, end);
+      plSlots.push({ type: "break", from: t, to: bEnd });
+      t = bEnd;
+    }
+  }
+}
+
+function renderPlannerForm() {
+  $("plStartIn").value = plan.start;
+  $("plEndIn").value = plan.end;
+  $("plSessionIn").value = plan.session;
+  $("plBreakIn").value = plan.brk;
+
+  const chips = $("plChips");
+  chips.innerHTML = "";
+  SUBJECTS.forEach(function (s) {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = "pl-chip" + (plan.subjects.indexOf(s.id) >= 0 ? " on" : "");
+    b.textContent = s.id;
+    b.addEventListener("click", function () {
+      const i = plan.subjects.indexOf(s.id);
+      if (i >= 0) { plan.subjects.splice(i, 1); } else { plan.subjects.push(s.id); }
+      b.classList.toggle("on");
+    });
+    chips.appendChild(b);
+  });
+}
+
+function renderTimeline() {
+  const box = $("plTimeline");
+  box.innerHTML = "";
+  let total = 0;
+  plSlots.forEach(function (sl, i) {
+    const d = document.createElement("div");
+    d.className = "pl-slot " + (sl.type === "break" ? "brk" : "");
+    d.id = "plSlot" + i;
+    const label = sl.type === "break" ? "☕ Mapumziko" : "📖 " + escapeHTML(sl.subject);
+    d.innerHTML = "<span>" + fmtMin(sl.from) + " – " + fmtMin(sl.to) + "</span><span>" + label + " (" + (sl.to - sl.from) + " dak)</span>";
+    box.appendChild(d);
+    if (sl.type === "study") { total += sl.to - sl.from; }
+  });
+  $("plTotal").textContent = plSlots.length
+    ? "Jumla ya kusoma leo: " + Math.floor(total / 60) + " saa " + (total % 60) + " dak"
+    : "";
+}
+
+function beep() {
+  try {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    [0, 0.25, 0.5].forEach(function (d) {
+      const o = ctx.createOscillator(), g = ctx.createGain();
+      o.connect(g); g.connect(ctx.destination);
+      o.frequency.value = 880; g.gain.value = 0.15;
+      o.start(ctx.currentTime + d); o.stop(ctx.currentTime + d + 0.15);
+    });
+  } catch (e) {}
+}
+
+function notify(text) {
+  beep();
+  try {
+    if ("Notification" in window && Notification.permission === "granted") {
+      new Notification("Study Planner", { body: text });
+    }
+  } catch (e) {}
+}
+
+function plSetStatus(cls, label, count, sub) {
+  $("plStatus").className = "pl-status " + cls;
+  $("plLabel").textContent = label;
+  $("plCount").textContent = count;
+  $("plSub").textContent = sub;
+}
+
+function plTick() {
+  if (!$("plLabel")) { return; }
+  if (!plSlots.length) {
+    plSetStatus("", "Weka muda sahihi", "--:--:--", "Muda wa kumaliza lazima uwe baada ya muda wa kuanza.");
+    return;
+  }
+  const d = new Date();
+  const nowSec = d.getHours() * 3600 + d.getMinutes() * 60 + d.getSeconds();
+  const startSec = plSlots[0].from * 60;
+  const endSec = plSlots[plSlots.length - 1].to * 60;
+
+  let idx = -1;
+  if (nowSec >= startSec && nowSec < endSec) {
+    for (let i = 0; i < plSlots.length; i++) {
+      if (nowSec >= plSlots[i].from * 60 && nowSec < plSlots[i].to * 60) { idx = i; break; }
+    }
+  } else if (nowSec >= endSec) { idx = plSlots.length; }
+
+  if (idx === -1 && nowSec < startSec) {
+    plSetStatus("", "⏳ Muda wa kuanza kusoma: " + fmtMin(plSlots[0].from), fmtSec(startSec - nowSec), "Kusoma kunaanza baada ya muda huu.");
+    $("plBar").style.width = "0%"; $("plBarText").textContent = "0%";
+  } else if (idx === plSlots.length) {
+    plSetStatus("done", "✅ Umemaliza kusoma leo", "00:00:00", "Hongera! Pumzika, tutaonana kesho.");
+    $("plBar").style.width = "100%"; $("plBarText").textContent = "100%";
+  } else {
+    const sl = plSlots[idx];
+    const left = sl.to * 60 - nowSec;
+    if (sl.type === "study") {
+      plSetStatus("study", "📖 Soma sasa: " + sl.subject, fmtSec(left), "Mpaka " + fmtMin(sl.to) + ". Maliza kusoma saa " + fmtMin(plSlots[plSlots.length - 1].to) + ".");
+    } else {
+      plSetStatus("break", "☕ Pumzika kidogo", fmtSec(left), "Rudi kusoma saa " + fmtMin(sl.to) + ".");
+    }
+    const pct = Math.round(((nowSec - startSec) / (endSec - startSec)) * 100);
+    $("plBar").style.width = pct + "%"; $("plBarText").textContent = pct + "% ya siku ya kusoma";
+  }
+
+  plSlots.forEach(function (sl, i) {
+    const el = $("plSlot" + i);
+    if (!el) { return; }
+    el.classList.toggle("now", i === idx);
+    el.classList.toggle("past", idx === plSlots.length || (idx !== -1 && i < idx));
+  });
+
+  if (idx !== plLastIdx) {
+    if (plLastIdx !== -2) {
+      if (idx === plSlots.length) { notify("Umemaliza kusoma leo. Hongera! ✅"); }
+      else if (idx >= 0) {
+        const s2 = plSlots[idx];
+        notify(s2.type === "study" ? "Anza kusoma: " + s2.subject + " (" + (s2.to - s2.from) + " dak)" : "Pumzika kidogo ☕");
+      }
+    }
+    plLastIdx = idx;
+  }
+}
+
+function savePlanFromForm() {
+  const start = $("plStartIn").value, end = $("plEndIn").value;
+  const session = parseInt($("plSessionIn").value, 10) || 50;
+  const brk = parseInt($("plBreakIn").value, 10);
+  const msg = $("plMsg");
+  if (!start || !end || toMin(end) <= toMin(start)) {
+    msg.style.color = "#dc2626";
+    msg.textContent = "❌ Muda wa kumaliza lazima uwe baada ya kuanza.";
+    return;
+  }
+  plan.start = start; plan.end = end;
+  plan.session = Math.max(10, session);
+  plan.brk = isNaN(brk) ? 10 : Math.max(0, brk);
+  savePlanStorage();
+  buildSlots();
+  renderTimeline();
+  plLastIdx = -2;
+  plTick();
+  msg.style.color = "#16a34a";
+  msg.textContent = "✅ Ratiba imehifadhiwa";
+}
+
+function initPlanner() {
+  loadPlan();
+  buildSlots();
+  renderPlannerForm();
+  renderTimeline();
+  plLastIdx = -2;
+  plTick();
+  if (!plTimer) { plTimer = setInterval(plTick, 1000); }
+}
+
+// ---------- START ----------
+document.addEventListener("DOMContentLoaded", function () {
+  $("loginForm").addEventListener("submit", loginUser);
+  $("logoutBtn").addEventListener("click", logoutUser);
+  $("backBtn").addEventListener("click", showHome);
+  $("searchInput").addEventListener("input", filterSubjects);
+  $("fileSearchInput").addEventListener("input", function () { renderFileList(this.value); });
+  $("plSave").addEventListener("click", savePlanFromForm);
+  $("plNotify").addEventListener("click", function () {
+    if (!("Notification" in window)) { $("plMsg").textContent = "Browser hii haina notifications, utasikia sauti tu."; return; }
+    Notification.requestPermission().then(function (r) {
+      $("plMsg").style.color = r === "granted" ? "#16a34a" : "#dc2626";
+      $("plMsg").textContent = r === "granted" ? "🔔 Kengele imewashwa" : "Kengele imekataliwa";
+      if (r === "granted") { beep(); }
+    });
+  });
+  $("togglePass").addEventListener("click", function () {
+    const p = $("loginPassword");
+    p.type = p.type === "password" ? "text" : "password";
+  });
+  initFirebase();
+});
+</script>
+</body>
+</html>
+
